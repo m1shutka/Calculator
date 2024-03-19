@@ -9,14 +9,14 @@ namespace Сalculator
 {
     class TPNumber
     {
-        private string number;//поле число
+        private double number;//поле число
         private int p;//основание сс
         private int accuracy;//точность задания числа
 
         //конструктор для числа в десятичной сс
         public TPNumber(double n, int p, int accuracy)
         {
-            number = Convert_10_p.Do(n, p, accuracy);
+            number = n;
             this.p = p;
             this.accuracy = accuracy;
         }
@@ -24,7 +24,7 @@ namespace Сalculator
         //конструктор для числа заданного в виде строки
         public TPNumber(string value, int p, int accuracy)
         {
-            number = value;
+            number = Convert_p_10.Do(value, p);
             this.p = p;
             this.accuracy = accuracy;
         }
@@ -38,13 +38,13 @@ namespace Сalculator
         //св-во для получения числа в строковом виде
         public string Number
         {
-            get { return number; }
+            get { return Convert_10_p.Do(number, p, accuracy); }
         }
 
         //св-во для получения числа в числовом виде
         public double DecimalNumber
         {
-            get { return Convert_p_10.Do(number, p); }
+            get { return number; }
         }
 
         //св-во для получения/задания основания в строковом виде
@@ -53,7 +53,6 @@ namespace Сalculator
             get{ return p.ToString(); }
             set
             {
-                number = Convert_10_p.Do(Convert_p_10.Do(number, p), Convert.ToInt32(value), accuracy);
                 p = Convert.ToInt32(value);
             }
         }
@@ -64,7 +63,6 @@ namespace Сalculator
             get{ return p; }
             set
             {
-                number = Convert_10_p.Do(Convert_p_10.Do(number, p), value, accuracy);
                 p = value;
             }
         }
@@ -75,7 +73,6 @@ namespace Сalculator
             get{ return accuracy; }
             set
             {
-                number = Convert_10_p.Do(Convert_p_10.Do(number, p), p, value);
                 accuracy = value;
             }
         }
@@ -86,7 +83,6 @@ namespace Сalculator
             get{ return accuracy.ToString(); }
             set
             {
-                number = Convert_10_p.Do(Convert_p_10.Do(number, p), p, Convert.ToInt32(value));
                 accuracy = Convert.ToInt32(value);
             }
         }
@@ -94,25 +90,25 @@ namespace Сalculator
         //оператор сложения
         public static TPNumber operator +(TPNumber n1, TPNumber n2)
         {
-            return new TPNumber(n1.DecimalNumber + n2.DecimalNumber, n1.IntP, 4);
+            return new TPNumber(n1.DecimalNumber + n2.DecimalNumber, n1.IntP, Math.Max(n1.IntAcc, n2.IntAcc));
         }
 
         //оператор вычитания
         public static TPNumber operator -(TPNumber n1, TPNumber n2)
         {
-            return new TPNumber(n1.DecimalNumber - n2.DecimalNumber, n1.IntP, 4);
+            return new TPNumber(n1.DecimalNumber - n2.DecimalNumber, n1.IntP, Math.Max(n1.IntAcc, n2.IntAcc));
         }
 
         //оператор умножения
         public static TPNumber operator *(TPNumber n1, TPNumber n2)
         {
-            return new TPNumber(n1.DecimalNumber * n2.DecimalNumber, n1.IntP, 4);
+            return new TPNumber(n1.DecimalNumber * n2.DecimalNumber, n1.IntP, Math.Max(n1.IntAcc, n2.IntAcc));
         }
 
         //оператор деления
         public static TPNumber operator /(TPNumber n1, TPNumber n2)
         {
-            return new TPNumber(n1.DecimalNumber / n2.DecimalNumber, n1.IntP, 10);
+            return new TPNumber(n1.DecimalNumber / n2.DecimalNumber, n1.IntP, Math.Max(n1.IntAcc, n2.IntAcc));
         }
 
         //возведение в квадрат
