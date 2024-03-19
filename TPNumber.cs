@@ -51,40 +51,28 @@ namespace Сalculator
         public string StrP
         {
             get{ return p.ToString(); }
-            set
-            {
-                p = Convert.ToInt32(value);
-            }
+            set{ p = Convert.ToInt32(value); }
         }
 
         //св-во для получения/задания основания в числовом виде
         public int IntP
         {
             get{ return p; }
-            set
-            {
-                p = value;
-            }
+            set{ p = value; }
         }
 
         //св-во для получения/задания точности в числовом виде
         public int IntAcc
         {
             get{ return accuracy; }
-            set
-            {
-                accuracy = value;
-            }
+            set{ accuracy = value; }
         }
 
         //св-во для получения/задания точности в строковом виде
         public string StrAcc
         {
             get{ return accuracy.ToString(); }
-            set
-            {
-                accuracy = Convert.ToInt32(value);
-            }
+            set{ accuracy = Convert.ToInt32(value); }
         }
 
         //оператор сложения
